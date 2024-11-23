@@ -17,7 +17,8 @@
 <br/>https://discord.com/oauth2/authorize?client_id=1308790683359903764
 
 <br/>url 링크에다 입력하면 디스코드가 실행되며 초대가 가능해집니다.
-
+<img src="https://github.com/user-attachments/assets/11ca61a6-330c-4d9e-8e92-d6450b7975ca.PNG"  width="700" height="370">
+![5](https://github.com/user-attachments/assets/11ca61a6-330c-4d9e-8e92-d6450b7975ca)
 <br/>
 <br/>
 <br/>
