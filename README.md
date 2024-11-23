@@ -19,7 +19,7 @@
 
 <br/>url 링크에다 입력하면 디스코드가 실행되며 초대가 가능해집니다.
 <br/>
-<img src="https://github.com/user-attachments/assets/11ca61a6-330c-4d9e-8e92-d6450b7975ca"  width="700" height="370">
+![1](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
 
 <br/>
 <br/>
