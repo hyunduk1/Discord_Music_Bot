@@ -47,7 +47,7 @@ async def on_message(message):
 #이벤트 입력 영역
     # 노래입력 명령어 처리
     if message.content.startswith('/플레이'):
-        query = message.content[len('/플레이 '):].strip()  # ?play 뒤의 키워드 또는 URL 추출
+        query = message.content[len('/플레이 '):].strip()  # /플레이 뒤의 키워드 또는 URL 추출
         
         if not query:
             await message.channel.send("재생할 키워드나 URL을 입력하세요!")
