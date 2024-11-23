@@ -17,7 +17,8 @@
 <br/>https://discord.com/oauth2/authorize?client_id=1308790683359903764
 <br/>                     ↑↑↑↑클릭↑↑↑↑
 
-<br/>실행 순서 ※※※엄청 쉬움※※※
+<br/>실행 순서 
+<br/>        ※※※엄청 쉬움※※※
 <br/>
 ![1](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
 <br/>
