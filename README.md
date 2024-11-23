@@ -15,14 +15,22 @@
 
 봇 호출 
 <br/>https://discord.com/oauth2/authorize?client_id=1308790683359903764
+<br/>                     ↑↑↑↑클릭↑↑↑↑
 
 <br/>url 링크에다 입력하면 디스코드가 실행되며 초대가 가능해집니다.
-<img src="https://github.com/user-attachments/assets/11ca61a6-330c-4d9e-8e92-d6450b7975ca.PNG"  width="700" height="370">
-![5](https://github.com/user-attachments/assets/11ca61a6-330c-4d9e-8e92-d6450b7975ca)
+<img src="https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822.PNG"  width="700" height="370">
 <br/>
+<img src="https://github.com/user-attachments/assets/b523c9b0-6546-40d9-b745-ee020db81db0.PNG"  width="700" height="370">
 <br/>
+<img src="https://github.com/user-attachments/assets/efa9b1d2-8b2c-4390-a99e-c872ab73f322.PNG"  width="700" height="370">
 <br/>
+<img src="https://github.com/user-attachments/assets/645dd240-3b45-4562-92e0-cfd93cf7c8ff"  width="700" height="370">
+<br/>
+<img src="https://github.com/user-attachments/assets/11ca61a6-330c-4d9e-8e92-d6450b7975ca"  width="700" height="370">
 
+<br/>
+<br/>
+<br/>
 기능추가, 코드리뷰, 수정요청 등은 메일로 연락주시면 적극 반영하도록 하겠습니다!
 <br/>whdmsrjt2@naver.com
 
