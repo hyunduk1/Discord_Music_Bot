@@ -20,6 +20,14 @@
 <br/>url 링크에다 입력하면 디스코드가 실행되며 초대가 가능해집니다.
 <br/>
 ![1](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
+<br/>
+![2](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
+<br/>
+![3](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
+<br/>
+![4](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
+<br/>
+![5](https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822)
 
 <br/>
 <br/>
