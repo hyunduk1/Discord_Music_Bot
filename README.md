@@ -18,6 +18,7 @@
 <br/>                     ↑↑↑↑클릭↑↑↑↑
 
 <br/>url 링크에다 입력하면 디스코드가 실행되며 초대가 가능해집니다.
+<br/>
 <img src="https://github.com/user-attachments/assets/7f19bad0-93f5-4d98-85b3-eb875721d822.PNG"  width="700" height="370">
 <br/>
 <img src="https://github.com/user-attachments/assets/b523c9b0-6546-40d9-b745-ee020db81db0.PNG"  width="700" height="370">
