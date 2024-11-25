@@ -1,98 +1,125 @@
 import discord
-import os
 import asyncio
 import yt_dlp
-from dotenv import load_dotenv
+import configparser
+from discord import app_commands
 
-token = "봇 토큰"
+def run_bot():
+    # 초기화
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+    TOKEN = config["DISCORD"]["HELLO_WORLD_BOT_TOKEN"]
+    intents = discord.Intents.default()
+    intents.message_content = True
+    client = discord.Client(intents=intents)
+    tree = app_commands.CommandTree(client)
 
-intents = discord.Intents.default()
-intents.message_content = True
-bot = discord.Client(intents=intents)
+    queues = {}
+    voice_clients = {}
+    yt_dl_options = {"format": "bestaudio/best"}
+    ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
-voice_clients = {}
+    ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
-#yt_dl_options = {"format": "bestaudio/best", "noplaylist": "True"}
-yt_dl_options = {
-    "format": "bestaudio/best",
-    "noplaylist": "True",
-    "nocheckcertificate": True,
-    "cachedir": False
-}
+    @client.event
+    async def on_ready():
+        print(f'{client.user} 준비 완')
+        await client.change_presence(status=discord.Status.online, activity=discord.Game("프로그래밍"))
+        await tree.sync()  # 슬래시 커맨드 동기화
 
-ytdl = yt_dlp.YoutubeDL(yt_dl_options)
+    # =======================================================================================================
+    #명령어별 이벤트
 
-#ffmpeg_options = {'options': '-vn'}
-ffmpeg_options = {
-    'options': '-vn -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
-}
+    #------------------------------------------------------------------------
+    #Play
+    #-------------[Do]------------------
+    #디스코드 메세지 창에 현재 재생중인 음악, 시간초, 
+    #아래의 기능들을 버튼으로 만들예정 {술팽봇 참고 예정}
+    #-------------[To Do]------------------
 
-#-----------------------------------------------------------------------
-# 봇 세팅 영역
-@bot.event
-async def on_ready():
-    print(f'{bot.user} 에 로그인하였습니다!')
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("프로그래밍"))
-
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-
-#-------------------------------------------------------------------------
-#봇 기능소개 영역
+    #-------------[Done]------------------
+    #음악 호출에 필요한 api 호출및 메세지 전송
 
 
-#--------------------------------------------------------------------------------------------------
-#이벤트 입력 영역
-    # 노래입력 명령어 처리
-    if message.content.startswith('/플레이'):
-        query = message.content[len('/플레이 '):].strip()  # /플레이 뒤의 키워드 또는 URL 추출
-        
-        if not query:
-            await message.channel.send("재생할 키워드나 URL을 입력하세요!")
+    @tree.command(name="플레이", description="음악을 재생합니다.")
+    async def play_command(interaction: discord.Interaction, music: str):
+        if not music:
+            msg = await interaction.response.send_message("재생할 음악이나, URL을 입력하세요! 삐빅..!")
             return
-
+        
         try:
-            # 사용자가 음성 채널에 있는지 확인
-            if not message.author.voice or not message.author.voice.channel:
-                await message.channel.send("음성 채널에 먼저 접속하세요!")
+            if not interaction.user.voice or not interaction.user.voice.channel:
+                msg = await interaction.response.send_message("음성 채널에 먼저 접속하세요! 삐빅..!")
                 return
+            
+            msg = await interaction.response.send_message("음악을 재생 중입니다. 잠시만 기다려 주세요...")
+            await asyncio.sleep(2)
+            
 
             # 봇이 음성 채널에 연결
-            if message.guild.id not in voice_clients or not voice_clients[message.guild.id].is_connected():
-                voice_client = await message.author.voice.channel.connect()
-                voice_clients[message.guild.id] = voice_client
+            if interaction.guild.id not in voice_clients or not voice_clients[interaction.guild.id].is_connected():
+                voice_client = await interaction.user.voice.channel.connect()
+                voice_clients[interaction.guild.id] = voice_client
             else:
-                voice_client = voice_clients[message.guild.id]
+                voice_client = voice_clients[interaction.guild.id]
 
             # 유튜브 검색 또는 URL 처리
-            if "http" in query:  # URL 처리
-                video_info = await asyncio.get_event_loop().run_in_executor(None, lambda: ytdl.extract_info(query, download=False))
+            if "http" in music:  # URL 처리
+                video_info = await asyncio.get_event_loop().run_in_executor(None, lambda: ytdl.extract_info(music, download=False))
             else:  # 키워드 검색
-                search_query = f"ytsearch:{query}"
+                search_query = f"ytsearch:{music}"
                 video_info = await asyncio.get_event_loop().run_in_executor(None, lambda: ytdl.extract_info(search_query, download=False)['entries'][0])
 
-            # 유튜브 URL 추출 및 재생
+            # 유튜브 URL 추출
             url = video_info['url']
-            title = video_info.get('title', '알 수 없는 제목')
-            await message.channel.send(f"🎵 재생 중: **{title}**")
+            loop = asyncio.get_event_loop()
+            data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
 
-            player = discord.FFmpegPCMAudio(url, **ffmpeg_options)
-            voice_client.play(player)
+            song = data['url']
+            youtube_url = video_info.get('webpage_url', 'URL을 찾을 수 없습니다.')
+            player = discord.FFmpegOpusAudio(song, **ffmpeg_options)
+            await interaction.followup.send(f"🎵 재생 중: **{youtube_url}**")
+            voice_clients[interaction.guild.id].play(player)
+            await asyncio.sleep(2)  # <= 유튜브 서치 되기전 바로 시작하면 URL은 null이 되기 때문에 2초정도의 딜레이가 적당 
+
+            voice_clients[interaction.guild.id].play(player)
 
         except Exception as e:
             print(e)
-            await message.channel.send("노래를 재생하는 도중 오류가 발생했습니다.")
+            #await interaction.followup.send("노래를 재생하는 중 에러가 발생했습니다. ERROR CODE -404")
 
-    # 봇 아웃 명령어 처리
-    elif message.content.startswith('/나가라'):
-        if message.guild.id in voice_clients:
-            await voice_clients[message.guild.id].disconnect()
-            del voice_clients[message.guild.id]
-            await message.channel.send("음성 채널을 떠났습니다!")
-        else:
-            await message.channel.send("봇이 음성 채널에 연결되어 있지 않습니다.")
-#----------------------------------------------------------------------------------------------------------
-# 봇 실행
-bot.run(token)
+    # /음악멈춰 명령어
+    @tree.command(name="음악멈춰", description="음악을 멈춥니다.")
+    async def stop_command(interaction: discord.Interaction):
+        try:
+            voice_clients[interaction.guild.id].pause()
+            #await interaction.response.send_message("음악을 멈췄습니다.")
+        except Exception as e:
+            print(f"음악 멈추기 실패: {e}")
+            #await interaction.response.send_message("음악을 멈추는 중 오류가 발생했습니다.")
+
+    # /음악재개 명령어
+    @tree.command(name="음악재개", description="음악을 재개합니다.")
+    async def resume_command(interaction: discord.Interaction):
+        try:
+            voice_clients[interaction.guild.id].resume()
+            #await interaction.response.send_message("음악을 재개했습니다.")
+        except Exception as e:
+            print(f"음악 재개 실패: {e}")
+            #await interaction.response.send_message("음악을 재개하는 중 오류가 발생했습니다.")
+
+    # /나가기 명령어
+    @tree.command(name="나가기", description="음악을 정지하고 음성 채널을 떠납니다.")
+    async def stop_music_command(interaction: discord.Interaction):
+        try:
+            voice_clients[interaction.guild.id].stop()
+            await voice_clients[interaction.guild.id].disconnect()
+            del voice_clients[interaction.guild.id]
+            #await interaction.response.send_message("음악이 정지되었습니다. 음성 채널을 떠납니다.")
+        except Exception as e:
+            print(f"음악 정지 실패: {e}")
+            #await interaction.response.send_message("음악을 정지하는 중 오류가 발생했습니다.")
+
+    # =======================================================================================================
+
+    client.run(TOKEN)
