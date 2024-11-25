@@ -10,12 +10,19 @@
 <br/>
 <br/>
 <br/>
-<br/>
 
 봇 호출 
 <br/>(https://discord.com/oauth2/authorize?client_id=1308790683359903764&permissions=2147485696&integration_type=0&scope=bot)
 <br/>                     ↑↑↑↑클릭↑↑↑↑
-
+<br/>
+<br/> 
+<br/>  !명령어 소개!
+<br/>  /플레이    유튜브 검색한다고 생각하시면 됩니다! ex) 창모 메테오 
+<br/>  /나가기    봇이 음성채널에서 나갑니다.
+<br/>  /음악멈춰  음악이 멈춥니다
+<br/>  /음악재개  음악이 다시 실행
+<br/>
+<br/>
 <br/>실행 순서 
 <br/>        ※※※엄청 쉬움※※※
 <br/>
