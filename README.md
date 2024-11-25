@@ -13,7 +13,7 @@
 <br/>
 
 봇 호출 
-<br/>[https://discord.com/oauth2/authorize?client_id=1308790683359903764](https://discord.com/oauth2/authorize?client_id=1308790683359903764&permissions=2147485696&integration_type=0&scope=bot)
+<br/>(https://discord.com/oauth2/authorize?client_id=1308790683359903764&permissions=2147485696&integration_type=0&scope=bot)
 <br/>                     ↑↑↑↑클릭↑↑↑↑
 
 <br/>실행 순서 
