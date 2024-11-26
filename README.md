@@ -1,4 +1,5 @@
 # Discord_Music_Bot
+<br/> 헬로 월드 뮤직봇!
 <br/>
 안녕하세요 섹시더꾸의 디스코드 인공지능 봇 Hello, World! 입니다.
 
